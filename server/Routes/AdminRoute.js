@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-const bcrypt = require('bcryptjs');
+import bcrypt from "bcryptjs";
 import multer from "multer";
 import path from "path";
 import mongoose from 'mongoose';
