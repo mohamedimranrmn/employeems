@@ -1,6 +1,5 @@
 import express from 'express';
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 import { Employee, EmployeeProject } from "../models/index.js";
 
 const router = express.Router();
@@ -13,9 +12,8 @@ router.post("/employee_login", async (req, res) => {
             return res.json({ loginStatus: false, Error: "Wrong email or password" });
         }
 
-        const isPasswordMatch = await bcrypt.compare(req.body.password, employee.password);
-
-        if (!isPasswordMatch) {
+        // Direct password comparison (plain text)
+        if (req.body.password !== employee.password) {
             return res.json({ loginStatus: false, Error: "Wrong email or password" });
         }
 
