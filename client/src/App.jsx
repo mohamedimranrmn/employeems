@@ -19,7 +19,7 @@ import AssignEmployee from './Components/AssignEmployee'
 import EmployeeProjects from './Components/EmployeeProjects'
 function App() {
   return (
-    <BrowserRouter basename="/employeems/">
+    <BrowserRouter>
     <Routes>
       <Route path='/' element={<Start />}></Route>
       <Route path='/adminlogin' element={<Login />}></Route>
@@ -43,4 +43,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
