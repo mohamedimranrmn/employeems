@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './style.css'
-import axios from 'axios'
+import api from '../api.js'
 import { useNavigate, Link } from 'react-router-dom'
 
 const Login = () => {
@@ -11,14 +11,14 @@ const Login = () => {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    axios.defaults.withCredentials = true;
+    api.defaults.withCredentials = true;
 
     const handleSubmit = async (event) => {
         event.preventDefault()
         setLoading(true)
         setError(null)
         try {
-            const result = await axios.post('http://localhost:3000/auth/adminlogin', values)
+            const result = await api.post('/auth/adminlogin', values)
             if(result.data.loginStatus) {
                 localStorage.setItem("valid", true)
                 navigate('/dashboard')

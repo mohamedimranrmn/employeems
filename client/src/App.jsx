@@ -19,7 +19,7 @@ import AssignEmployee from './Components/AssignEmployee'
 import EmployeeProjects from './Components/EmployeeProjects'
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/employeems/">
     <Routes>
       <Route path='/' element={<Start />}></Route>
       <Route path='/adminlogin' element={<Login />}></Route>

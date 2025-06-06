@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 const AssignEmployee = () => {
     const [employees, setEmployees] = useState([]);
@@ -13,7 +13,7 @@ const AssignEmployee = () => {
 
     const fetchEmployees = async () => {
         try {
-            const result = await axios.get('http://localhost:3000/auth/employee');
+            const result = await api.get('/auth/employee');
             setEmployees(result.data.Result);
         } catch (error) {
             console.error("Error fetching employees:", error);
@@ -22,7 +22,7 @@ const AssignEmployee = () => {
 
     const fetchProjects = async () => {
         try {
-            const result = await axios.get('http://localhost:3000/auth/projects');
+            const result = await api.get('/auth/projects');
             setProjects(result.data.Result);
         } catch (error) {
             console.error("Error fetching projects:", error);
@@ -32,7 +32,7 @@ const AssignEmployee = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const result = await axios.post('http://localhost:3000/auth/assign_employee', formData);
+            const result = await api.post('/auth/assign_employee', formData);
             if (result.data.Status) {
                 setFormData({ id: '', project_id: '', role: '' });
                 alert('Employee assigned successfully!');

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../api.js'
 import { useEffect, useState } from 'react'
 
 
@@ -16,7 +16,7 @@ const Home = () => {
   }, []);
 
   const AdminRecords = () => {
-    axios.get('http://localhost:3000/auth/admin_records')
+    api.get('/auth/admin_records')
     .then(result => {
       if(result.data.Status) {
         setAdmins(result.data.Result)
@@ -26,7 +26,7 @@ const Home = () => {
     })
   }
   const adminCount = () => {
-    axios.get('http://localhost:3000/auth/admin_count')
+    api.get('/auth/admin_count')
     .then(result => {
       if(result.data.Status) {
         setAdminTotal(result.data.Result[0].admin)
@@ -34,7 +34,7 @@ const Home = () => {
     })
   }
   const employeeCount = () => {
-    axios.get('http://localhost:3000/auth/employee_count')
+    api.get('/auth/employee_count')
     .then(result => {
       if(result.data.Status) {
         console.log(result.data);
@@ -43,7 +43,7 @@ const Home = () => {
     })
   }
   const salaryCount = () => {
-    axios.get('http://localhost:3000/auth/salary_count')
+    api.get('/auth/salary_count')
     .then(result => {
       if(result.data.Status) {
         setSalaryTotal(result.data.Result[0].salaryOFEmp)
@@ -56,7 +56,7 @@ const Home = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure you want to Delete?");
     if(isConfirmed){
-    axios.delete('http://localhost:3000/auth/delete_admin/'+id)
+    api.delete('/auth/delete_admin/'+id)
     .then(res => {
         if(res.data.Status) {
             window.location.reload()

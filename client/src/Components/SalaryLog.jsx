@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api.js';
 
 const SalaryLog = () => {
     const [salaryLogs, setSalaryLogs] = useState([]);
@@ -16,7 +16,7 @@ const SalaryLog = () => {
             setLoading(true);
             setError(null);
 
-            const result = await axios.get('http://localhost:3000/auth/salary');
+            const result = await api.get('/auth/salary');
 
             if (result.data.Status) {
                 setSalaryLogs(result.data.Result || []);

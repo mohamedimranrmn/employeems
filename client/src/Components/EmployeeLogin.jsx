@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './style.css';
-import axios from 'axios';
+import api from '../api.js';
 import { useNavigate, Link } from 'react-router-dom';
 
 const EmployeeLogin = () => {
@@ -12,7 +12,6 @@ const EmployeeLogin = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    axios.defaults.withCredentials = true;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -20,7 +19,7 @@ const EmployeeLogin = () => {
         setError(null);
 
         try {
-            const result = await axios.post('http://localhost:3000/employee/employee_login', values);
+            const result = await api.post('/employee/employee_login', values);
 
             if (result.data.loginStatus) {
                 localStorage.setItem("valid", true);

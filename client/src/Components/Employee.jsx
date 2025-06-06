@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api.js";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -6,8 +6,8 @@ const Employee = () => {
   const [employee, setEmployee] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/auth/employee")
+    api
+      .get("/auth/employee")
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);
@@ -21,7 +21,7 @@ const Employee = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure you want to Delete?");
     if(isConfirmed){
-    axios.delete('http://localhost:3000/auth/delete_employee/'+id)
+    api.delete('/auth/delete_employee/'+id)
     .then(res => {
         if(res.data.Status) {
             window.location.reload()

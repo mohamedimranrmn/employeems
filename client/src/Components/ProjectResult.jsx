@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../api.js';
 import {useEffect, useState} from "react";
 
 const ProjectResult = () => {
@@ -10,7 +10,7 @@ const ProjectResult = () => {
 
     const fetchProjects = async () => {
         try {
-            const result = await axios.get('http://localhost:3000/auth/projects');
+            const result = await api.get('/auth/projects');
             setProjects(result.data.Result);
         } catch (error) {
             console.error("Error fetching projects:", error);
@@ -21,7 +21,7 @@ const ProjectResult = () => {
         const isConfirmed = window.confirm("Are you sure you want to delete this project?");
         if (isConfirmed) {
             try {
-                const result = await axios.delete(`http://localhost:3000/auth/delete_project/${id}`);
+                const result = await api.delete(`/auth/delete_project/${id}`);
                 if (result.data.Status) {
                     fetchProjects();
                 } else {

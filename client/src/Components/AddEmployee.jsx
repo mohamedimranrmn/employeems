@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 const AddEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -16,8 +16,7 @@ const AddEmployee = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios
-        .get("http://localhost:3000/auth/category")
+    api.get("/auth/category")
         .then((result) => {
           if (result.data.Status) {
             setCategory(result.data.Result);
@@ -39,7 +38,7 @@ const AddEmployee = () => {
     formData.append('image', employee.image);
     formData.append('category_id', employee.category_id);
 
-    axios.post('http://localhost:3000/auth/add_employee', formData)
+    api.post('/auth/add_employee', formData)
         .then(result => {
           if(result.data.Status) {
             navigate('/dashboard/employee')

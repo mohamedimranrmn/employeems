@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api.js'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const EmployeeDetail = () => {
@@ -18,7 +18,7 @@ const EmployeeDetail = () => {
 
   const fetchEmployeeDetail = async () => {
     try {
-      const result = await axios.get(`http://localhost:3000/employee/detail/${id}`);
+      const result = await api.get(`/employee/detail/${id}`);
       if (result.data.Status) {
         setEmployee(result.data.Result);
       }
@@ -29,7 +29,7 @@ const EmployeeDetail = () => {
 
   const fetchEmployeeProjects = async () => {
     try {
-      const result = await axios.get(`http://localhost:3000/auth/assignments/employee/${id}`);
+      const result = await api.get(`/auth/assignments/employee/${id}`);
       if (result.data.Status) {
         setProjects(result.data.Result);
       }
@@ -42,7 +42,7 @@ const EmployeeDetail = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:3000/employee/employee_logout');
+      await api.get('/employee/employee_logout');
       localStorage.removeItem("valid");
       navigate('/employee_login');
     } catch (error) {

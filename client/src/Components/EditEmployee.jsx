@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import api from "../api";
 
 const EditEmployee = () => {
     const { id } = useParams();
@@ -28,7 +28,7 @@ const EditEmployee = () => {
                 setLoading(true);
 
                 // Fetch categories
-                const categoriesResult = await axios.get('http://localhost:3000/auth/category');
+                const categoriesResult = await api.get('/auth/category');
                 if (categoriesResult.data.Status) {
                     setCategory(categoriesResult.data.Result);
                 } else {
@@ -36,7 +36,7 @@ const EditEmployee = () => {
                 }
 
                 // Fetch employee
-                const employeeResult = await axios.get(`http://localhost:3000/auth/employee/${id}`);
+                const employeeResult = await api.get(`/auth/employee/${id}`);
                 if (employeeResult.data.Status && employeeResult.data.Result.length > 0) {
                     const emp = employeeResult.data.Result[0];
                     setEmployee({
@@ -92,7 +92,7 @@ const EditEmployee = () => {
         }
 
         try {
-            const result = await axios.put(`http://localhost:3000/auth/edit_employee/${id}`, {
+            const result = await api.put(`/auth/edit_employee/${id}`, {
                 ...employee,
                 salary: parseFloat(employee.salary)
             });

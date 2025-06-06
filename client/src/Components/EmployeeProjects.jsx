@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api.js';
 
 const EmployeeProjects = () => {
     const [assignments, setAssignments] = useState([]);
@@ -10,7 +10,7 @@ const EmployeeProjects = () => {
 
     const fetchAssignments = async () => {
         try {
-            const result = await axios.get('http://localhost:3000/auth/employee_projects');
+            const result = await api.get('/auth/employee_projects');
             if (result.data.Status) {
                 setAssignments(result.data.Result);
             } else {
