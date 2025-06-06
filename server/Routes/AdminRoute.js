@@ -1,6 +1,5 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 import multer from "multer";
 import path from "path";
 import mongoose from 'mongoose';
@@ -16,9 +15,8 @@ router.post("/adminlogin", async (req, res) => {
             return res.json({ loginStatus: false, Error: "wrong email or password" });
         }
 
-        const isPasswordMatch = await bcrypt.compare(req.body.password, admin.password);
-
-        if (!isPasswordMatch) {
+        // Direct password comparison (plain text)
+        if (req.body.password !== admin.password) {
             return res.json({ loginStatus: false, Error: "wrong email or password" });
         }
 
@@ -93,12 +91,11 @@ const upload = multer({ storage: storage });
 
 router.post('/add_employee', upload.single('image'), async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
+        // Store password as plain text (not recommended for production)
         const newEmployee = new Employee({
             name: req.body.name,
             email: req.body.email,
-            password: hashedPassword,
+            password: req.body.password, // Plain text password
             address: req.body.address,
             salary: req.body.salary,
             image: req.file.filename,
@@ -213,12 +210,10 @@ router.post('/add_admin', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Hash the password before saving
-        const hashedPassword = await bcrypt.hash(password, 10);
-
+        // Store password as plain text (not recommended for production)
         const newAdmin = new Admin({
             email,
-            password: hashedPassword,
+            password: password, // Plain text password
         });
 
         const result = await newAdmin.save();
@@ -229,7 +224,6 @@ router.post('/add_admin', async (req, res) => {
         return res.status(500).json({ Status: false, Error: err.message });
     }
 });
-
 
 router.delete('/delete_admin/:id', async (req, res) => {
     try {
