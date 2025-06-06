@@ -40,7 +40,7 @@ const SalaryLog = () => {
                 hour: '2-digit',
                 minute: '2-digit'
             });
-        } catch (error) {
+        } catch {
             return 'Invalid Date';
         }
     };
@@ -51,7 +51,7 @@ const SalaryLog = () => {
                 style: 'currency',
                 currency: 'USD'
             }).format(amount || 0);
-        } catch (error) {
+        } catch {
             return `$${amount || 0}`;
         }
     };
@@ -69,24 +69,14 @@ const SalaryLog = () => {
     };
 
     const getEmployeeName = (log) => {
-        // Check multiple possible fields for employee name
-        if (log.employee_id && log.employee_id.name) {
-            return log.employee_id.name;
-        }
-        if (log.name) {
-            return log.name;
-        }
-        if (log.employeeName) {
-            return log.employeeName;
-        }
+        if (log.employee_id?.name) return log.employee_id.name;
+        if (log.name) return log.name;
+        if (log.employeeName) return log.employeeName;
         return 'Unknown Employee';
     };
 
     const getEmployeeEmail = (log) => {
-        if (log.employee_id && log.employee_id.email) {
-            return log.employee_id.email;
-        }
-        return '';
+        return log.employee_id?.email || '';
     };
 
     const filteredLogs = salaryLogs.filter(log => {
@@ -114,44 +104,45 @@ const SalaryLog = () => {
 
     return (
         <div className="container mt-4">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h3>Employee Salary Change Log</h3>
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                <h3 className="mb-0">Employee Salary Change Log</h3>
                 <button
-                    className="btn btn-outline-primary"
+                    className="btn btn-outline-primary d-flex align-items-center"
                     onClick={handleRefresh}
                     disabled={loading}
                 >
-                    <i className="fas fa-refresh me-1"></i>
+                    <i className="fas fa-sync-alt me-2"></i>
                     Refresh
                 </button>
             </div>
 
             {error && (
-                <div className="alert alert-danger d-flex align-items-center" role="alert">
-                    <i className="fas fa-exclamation-triangle me-2"></i>
+                <div className="alert alert-danger d-flex align-items-center justify-content-between" role="alert">
                     <div>
+                        <i className="fas fa-exclamation-triangle me-2"></i>
                         {error}
-                        <button
-                            className="btn btn-sm btn-outline-danger ms-2"
-                            onClick={handleRefresh}
-                        >
-                            Try Again
-                        </button>
                     </div>
+                    <button
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={handleRefresh}
+                    >
+                        Try Again
+                    </button>
                 </div>
             )}
 
-            <div className="row mb-3">
-                <div className="col-md-6">
+            <div className="row mb-3 align-items-center">
+                <div className="col-12 col-md-6 mb-2 mb-md-0">
                     <input
                         type="text"
                         placeholder="Search by employee name..."
                         className="form-control"
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
+                        aria-label="Search employee by name"
                     />
                 </div>
-                <div className="col-md-6 d-flex align-items-center">
+                <div className="col-12 col-md-6 text-md-end">
                     <small className="text-muted">
                         Showing {filteredLogs.length} of {salaryLogs.length} records
                     </small>
@@ -159,18 +150,18 @@ const SalaryLog = () => {
             </div>
 
             {!error && (
-                <div className="table-responsive">
-                    <table className="table table-striped table-bordered table-hover">
+                <div className="table-responsive shadow-sm rounded">
+                    <table className="table table-striped table-bordered table-hover mb-0">
                         <thead className="table-dark">
                         <tr>
-                            <th>Employee</th>
-                            <th>Email</th>
-                            <th>Previous Salary</th>
-                            <th>New Salary</th>
-                            <th>Change</th>
-                            <th>Amount Change</th>
-                            <th>Date</th>
-                            <th>Reason</th>
+                            <th scope="col">Employee</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Previous Salary</th>
+                            <th scope="col">New Salary</th>
+                            <th scope="col">Change</th>
+                            <th scope="col">Amount Change</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Reason</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -185,30 +176,14 @@ const SalaryLog = () => {
 
                                 return (
                                     <tr key={log._id || index}>
-                                        <td>
-                                            <strong>{employeeName}</strong>
-                                        </td>
-                                        <td>
-                                            <small className="text-muted">{employeeEmail}</small>
-                                        </td>
+                                        <td><strong>{employeeName}</strong></td>
+                                        <td><small className="text-muted">{employeeEmail}</small></td>
                                         <td>{formatCurrency(oldSalary)}</td>
                                         <td>{formatCurrency(newSalary)}</td>
-                                        <td className={changeClass}>
-                                            <strong>{icon} {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}</strong>
-                                        </td>
-                                        <td className={changeClass}>
-                                            <strong>
-                                                {changeAmount > 0 ? '+' : ''}{formatCurrency(changeAmount)}
-                                            </strong>
-                                        </td>
-                                        <td>
-                                            {formatDate(log.change_date || log.createdAt || log.updatedAt)}
-                                        </td>
-                                        <td>
-                                                <span className="badge bg-secondary">
-                                                    {log.reason || 'Salary Update'}
-                                                </span>
-                                        </td>
+                                        <td className={changeClass}><strong>{icon} {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}</strong></td>
+                                        <td className={changeClass}><strong>{changeAmount > 0 ? '+' : ''}{formatCurrency(changeAmount)}</strong></td>
+                                        <td>{formatDate(log.change_date || log.createdAt || log.updatedAt)}</td>
+                                        <td><span className="badge bg-secondary">{log.reason || 'Salary Update'}</span></td>
                                     </tr>
                                 );
                             })
@@ -236,7 +211,7 @@ const SalaryLog = () => {
             )}
 
             {!loading && !error && salaryLogs.length === 0 && (
-                <div className="alert alert-info text-center">
+                <div className="alert alert-info text-center mt-4">
                     <i className="fas fa-info-circle me-2"></i>
                     No salary change records have been created yet. Salary changes will appear here when employees' salaries are updated.
                 </div>

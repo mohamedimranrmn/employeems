@@ -126,142 +126,142 @@ const EditEmployee = () => {
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center mt-3">
-            <div className="p-3 rounded w-50 border">
-                <h3 className="text-center">Edit Employee</h3>
+        <div className="container my-3">
+            <div className="row justify-content-center">
+                <div className="col-12 col-sm-10 col-md-8 col-lg-6 p-3 border rounded shadow-sm bg-white">
+                    <h3 className="text-center mb-4">Edit Employee</h3>
 
-                {error && (
-                    <div className="alert alert-danger" role="alert">
-                        {error}
-                    </div>
-                )}
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error}
+                        </div>
+                    )}
 
-                {success && (
-                    <div className="alert alert-success" role="alert">
-                        {success}
-                    </div>
-                )}
+                    {success && (
+                        <div className="alert alert-success" role="alert">
+                            {success}
+                        </div>
+                    )}
 
-                <form className="row g-1" onSubmit={handleSubmit}>
-                    <div className="col-12">
-                        <label htmlFor="inputName" className="form-label">
-                            Name <span className="text-danger">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control rounded-0"
-                            id="inputName"
-                            placeholder="Enter Name"
-                            value={employee.name}
-                            onChange={(e) => setEmployee({ ...employee, name: e.target.value })}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
+                    <form onSubmit={handleSubmit} className="g-3">
+                        <div className="mb-3">
+                            <label htmlFor="inputName" className="form-label">
+                                Name <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control rounded-0"
+                                id="inputName"
+                                placeholder="Enter Name"
+                                value={employee.name}
+                                onChange={(e) => setEmployee({ ...employee, name: e.target.value })}
+                                required
+                                disabled={loading}
+                            />
+                        </div>
 
-                    <div className="col-12">
-                        <label htmlFor="inputEmail4" className="form-label">
-                            Email <span className="text-danger">*</span>
-                        </label>
-                        <input
-                            type="email"
-                            className="form-control rounded-0"
-                            id="inputEmail4"
-                            placeholder="Enter Email"
-                            autoComplete="off"
-                            value={employee.email}
-                            onChange={(e) => setEmployee({ ...employee, email: e.target.value })}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="inputEmail4" className="form-label">
+                                Email <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="email"
+                                className="form-control rounded-0"
+                                id="inputEmail4"
+                                placeholder="Enter Email"
+                                autoComplete="off"
+                                value={employee.email}
+                                onChange={(e) => setEmployee({ ...employee, email: e.target.value })}
+                                required
+                                disabled={loading}
+                            />
+                        </div>
 
-                    <div className="col-12">
-                        <label htmlFor="inputSalary" className="form-label">
-                            Salary <span className="text-danger">*</span>
-                        </label>
-                        <input
-                            type="number"
-                            className="form-control rounded-0"
-                            id="inputSalary"
-                            placeholder="Enter Salary"
-                            autoComplete="off"
-                            value={employee.salary}
-                            onChange={(e) => setEmployee({ ...employee, salary: e.target.value })}
-                            min="0"
-                            step="0.01"
-                            required
-                            disabled={loading}
-                        />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="inputSalary" className="form-label">
+                                Salary <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="number"
+                                className="form-control rounded-0"
+                                id="inputSalary"
+                                placeholder="Enter Salary"
+                                autoComplete="off"
+                                value={employee.salary}
+                                onChange={(e) => setEmployee({ ...employee, salary: e.target.value })}
+                                min="0"
+                                step="0.01"
+                                required
+                                disabled={loading}
+                            />
+                        </div>
 
-                    <div className="col-12">
-                        <label htmlFor="inputAddress" className="form-label">
-                            Address <span className="text-danger">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control rounded-0"
-                            id="inputAddress"
-                            placeholder="1234 Main St"
-                            autoComplete="off"
-                            value={employee.address}
-                            onChange={(e) => setEmployee({ ...employee, address: e.target.value })}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="inputAddress" className="form-label">
+                                Address <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control rounded-0"
+                                id="inputAddress"
+                                placeholder="1234 Main St"
+                                autoComplete="off"
+                                value={employee.address}
+                                onChange={(e) => setEmployee({ ...employee, address: e.target.value })}
+                                required
+                                disabled={loading}
+                            />
+                        </div>
 
-                    <div className="col-12">
-                        <label htmlFor="category" className="form-label">
-                            Category <span className="text-danger">*</span>
-                        </label>
-                        <select
-                            name="category"
-                            id="category"
-                            className="form-select"
-                            value={employee.category_id}
-                            onChange={(e) => setEmployee({ ...employee, category_id: e.target.value })}
-                            required
-                            disabled={loading}
-                        >
-                            <option value="">Select Category</option>
-                            {category.map((c) => (
-                                <option key={c._id} value={c._id}>
-                                    {c.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                        <div className="mb-4">
+                            <label htmlFor="category" className="form-label">
+                                Category <span className="text-danger">*</span>
+                            </label>
+                            <select
+                                name="category"
+                                id="category"
+                                className="form-select"
+                                value={employee.category_id}
+                                onChange={(e) => setEmployee({ ...employee, category_id: e.target.value })}
+                                required
+                                disabled={loading}
+                            >
+                                <option value="">Select Category</option>
+                                {category.map((c) => (
+                                    <option key={c._id} value={c._id}>
+                                        {c.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div className="col-12 mt-3">
-                        <button
-                            type="submit"
-                            className="btn btn-primary w-100"
-                            disabled={loading}
-                        >
-                            {loading ? (
-                                <>
-                                    <span className="spinner-border spinner-border-sm me-2" role="status"></span>
-                                    Updating...
-                                </>
-                            ) : (
-                                'Update Employee'
-                            )}
-                        </button>
-                    </div>
+                        <div className="d-grid gap-2">
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <>
+                                        <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                                        Updating...
+                                    </>
+                                ) : (
+                                    'Update Employee'
+                                )}
+                            </button>
 
-                    <div className="col-12 mt-2">
-                        <button
-                            type="button"
-                            className="btn btn-secondary w-100"
-                            onClick={() => navigate('/dashboard/employee')}
-                            disabled={loading}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() => navigate('/dashboard/employee')}
+                                disabled={loading}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

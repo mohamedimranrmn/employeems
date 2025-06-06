@@ -50,67 +50,94 @@ const Projects = () => {
     };
 
     return (
-        <div className="container">
-            <h2 className="my-4 d-flex justify-content-center">Add Projects</h2>
-            <form onSubmit={handleSubmit} className="mb-4">
-                <div className="mb-3">
-                    <label className="form-label">Project Name</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Project Name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Start Date</label>
-                    <input
-                        type="date"
-                        className="form-control"
-                        value={formData.start_date}
-                        onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">End Date</label>
-                    <input
-                        type="date"
-                        className="form-control"
-                        value={formData.end_date}
-                        onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
-                        required
-                    />
-                </div>
-                <button type="submit" className="btn btn-success">Add Project</button>
-            </form>
+        <div className="container my-4">
+            <h2 className="text-center mb-4">Add Projects</h2>
 
-            <table className="table table-striped">
-                <thead>
+            {/* Form wrapped in a responsive card */}
+            <div className="card shadow-sm mb-5">
+                <div className="card-body">
+                    <form onSubmit={handleSubmit}>
+                        <div className="row g-3">
+                            <div className="col-12 col-md-6">
+                                <label className="form-label">Project Name</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Project Name"
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div className="col-6 col-md-3">
+                                <label className="form-label">Start Date</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    value={formData.start_date}
+                                    onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div className="col-6 col-md-3">
+                                <label className="form-label">End Date</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    value={formData.end_date}
+                                    onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-3 text-end">
+                            <button type="submit" className="btn btn-success px-4">
+                                Add Project
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {/* Responsive Table Container */}
+            <div className="table-responsive shadow-sm rounded">
+                <table className="table table-striped table-hover mb-0">
+                    <thead className="table-light">
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Actions</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col" className="text-center">Actions</th>
                     </tr>
-                </thead>
-                <tbody>
-                    {projects.map((project,index) => (
-                        <tr key={index}>
-                            <td>{index+1}</td>
-                            <td>{project.name}</td>
-                            <td>{project.start_date}</td>
-                            <td>{project.end_date}</td>
-                            <td>
-                                <button className='btn btn-danger ' onClick={() => handleDelete(project.id)}><i class="bi bi-trash"></i></button>
-                            </td>
+                    </thead>
+                    <tbody>
+                    {projects.length === 0 ? (
+                        <tr>
+                            <td colSpan="5" className="text-center py-3">No projects found.</td>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    ) : (
+                        projects.map((project, index) => (
+                            <tr key={project._id || index}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{project.name}</td>
+                                <td>{new Date(project.start_date).toLocaleDateString()}</td>
+                                <td>{new Date(project.end_date).toLocaleDateString()}</td>
+                                <td className="text-center">
+                                    <button
+                                        className="btn btn-danger btn-sm"
+                                        onClick={() => handleDelete(project._id)}
+                                        aria-label={`Delete project ${project.name}`}
+                                    >
+                                        <i className="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import api from '../api.js';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 const ProjectResult = () => {
     const [projects, setProjects] = useState([]);
@@ -34,33 +34,35 @@ const ProjectResult = () => {
     };
 
     return (
-        <div>
-            <table className="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {projects.map((project) => (
-                    <tr key={project._id}>
-                        <td>{project._id}</td>
-                        <td>{project.name}</td>
-                        <td>{new Date(project.start_date).toLocaleDateString()}</td>
-                        <td>{new Date(project.end_date).toLocaleDateString()}</td>
-                        <td>
-                            <button className="btn btn-danger" onClick={() => handleDelete(project._id)}>Delete</button>
-                        </td>
+        <div className="container my-4 px-2">
+            <div className="table-responsive">
+                <table className="table table-striped table-bordered">
+                    <thead className="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th className="text-center">Actions</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {projects.map((project) => (
+                        <tr key={project._id}>
+                            <td className="text-truncate" style={{ maxWidth: "150px" }}>{project._id}</td>
+                            <td>{project.name}</td>
+                            <td>{new Date(project.start_date).toLocaleDateString()}</td>
+                            <td>{new Date(project.end_date).toLocaleDateString()}</td>
+                            <td className="text-center">
+                                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(project._id)}>Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default ProjectResult;

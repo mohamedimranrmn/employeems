@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../api.js'
+import api from '../api.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const EmployeeDetail = () => {
@@ -23,7 +23,7 @@ const EmployeeDetail = () => {
         setEmployee(result.data.Result);
       }
     } catch (error) {
-      console.error("Error fetching employee details:", error);
+      console.error('Error fetching employee details:', error);
     }
   };
 
@@ -34,7 +34,7 @@ const EmployeeDetail = () => {
         setProjects(result.data.Result);
       }
     } catch (error) {
-      console.error("Error fetching employee projects:", error);
+      console.error('Error fetching employee projects:', error);
     } finally {
       setLoading(false);
     }
@@ -43,21 +43,23 @@ const EmployeeDetail = () => {
   const handleLogout = async () => {
     try {
       await api.get('/employee/employee_logout');
-      localStorage.removeItem("valid");
+      localStorage.removeItem('valid');
       navigate('/employee_login');
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error('Logout error:', error);
     }
   };
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
-    return isNaN(date.getTime()) ? 'N/A' : date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+    return isNaN(date.getTime())
+        ? 'N/A'
+        : date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
   };
 
   if (loading) {
@@ -81,15 +83,12 @@ const EmployeeDetail = () => {
   return (
       <div className="container py-4">
         <div className="row justify-content-center">
-          <div className="col-lg-10">
+          <div className="col-12 col-lg-10">
             <div className="card shadow-lg border-0 rounded-lg overflow-hidden">
               {/* Header Section */}
-              <div className="card-header d-flex justify-content-between align-items-center">
+              <div className="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <h3 className="mb-0">Employee Dashboard</h3>
-                <button
-                    className="btn btn-light btn-sm"
-                    onClick={handleLogout}
-                >
+                <button className="btn btn-light btn-sm" onClick={handleLogout}>
                   <i className="bi bi-box-arrow-right me-1"></i> Logout
                 </button>
               </div>
@@ -98,16 +97,16 @@ const EmployeeDetail = () => {
               <div className="card-body p-0">
                 <div className="row g-0">
                   {/* Profile Sidebar */}
-                  <div className="col-md-4 bg-light p-4 d-flex flex-column align-items-center">
+                  <aside className="col-12 col-md-4 bg-light p-4 d-flex flex-column align-items-center">
                     <div className="position-relative mb-3">
                       <img
-                          src={`http://localhost:3000/Images/${employee.image}`}
+                          src={`${api.defaults.baseURL}/Images/${employee.image}`}
                           alt={employee.name}
                           className="img-fluid rounded-circle border border-4 border-white shadow"
                           style={{
                             width: '180px',
                             height: '180px',
-                            objectFit: 'cover'
+                            objectFit: 'cover',
                           }}
                       />
                       <span className="position-absolute bottom-0 end-0 bg-success rounded-circle p-2 border border-3 border-white"></span>
@@ -116,24 +115,25 @@ const EmployeeDetail = () => {
                     <h4 className="text-center mb-1">{employee.name}</h4>
                     <div className="w-100 text-center text-muted mb-3">
                       <div className="d-flex justify-content-between py-2 border-bottom">
-                        <span className="text-muted mt-5">Email:</span>
-                        <span className="fw-bold mt-5" >{employee.email}</span>
+                        <span className="text-muted">Email:</span>
+                        <span className="fw-bold">{employee.email}</span>
                       </div>
                       <div className="d-flex justify-content-between py-2 border-bottom">
-                        <span className="text-muted mt-lg-1">Salary:</span>
-                        <span className="fw-bold mt-lg-1">${employee.salary}</span>
+                        <span className="text-muted">Salary:</span>
+                        <span className="fw-bold">${employee.salary}</span>
                       </div>
                     </div>
-                  </div>
+                  </aside>
 
                   {/* Main Content */}
-                  <div className="col-md-8 p-4">
+                  <section className="col-12 col-md-8 p-4">
                     {/* Navigation Tabs */}
-                    <ul className="nav nav-tabs mb-4">
+                    <ul className="nav nav-tabs mb-4 flex-wrap">
                       <li className="nav-item">
                         <button
                             className={`nav-link ${activeTab === 'profile' ? 'active' : ''}`}
                             onClick={() => setActiveTab('profile')}
+                            type="button"
                         >
                           <i className="bi bi-person me-1"></i> Profile
                         </button>
@@ -142,6 +142,7 @@ const EmployeeDetail = () => {
                         <button
                             className={`nav-link ${activeTab === 'projects' ? 'active' : ''}`}
                             onClick={() => setActiveTab('projects')}
+                            type="button"
                         >
                           <i className="bi bi-folder me-1"></i> Projects
                         </button>
@@ -155,13 +156,13 @@ const EmployeeDetail = () => {
                           <div className="tab-pane fade show active">
                             <h5 className="mb-3">Personal Information</h5>
                             <div className="row mb-4">
-                              <div className="col-md-6">
+                              <div className="col-12 col-md-6">
                                 <div className="mb-3">
                                   <label className="form-label text-muted">Full Name</label>
                                   <div className="form-control bg-light">{employee.name}</div>
                                 </div>
                               </div>
-                              <div className="col-md-6">
+                              <div className="col-12 col-md-6">
                                 <div className="mb-3">
                                   <label className="form-label text-muted">Email</label>
                                   <div className="form-control bg-light">{employee.email}</div>
@@ -177,13 +178,15 @@ const EmployeeDetail = () => {
 
                             <h5 className="mb-3">Employment Details</h5>
                             <div className="row">
-                              <div className="col-md-6">
+                              <div className="col-12 col-md-6">
                                 <div className="mb-3">
                                   <label className="form-label text-muted">Department</label>
-                                  <div className="form-control bg-light">{employee.category_id?.name || 'N/A'}</div>
+                                  <div className="form-control bg-light">
+                                    {employee.category_id?.name || 'N/A'}
+                                  </div>
                                 </div>
                               </div>
-                              <div className="col-md-6">
+                              <div className="col-12 col-md-6">
                                 <div className="mb-3">
                                   <label className="form-label text-muted">Salary</label>
                                   <div className="form-control bg-light">${employee.salary}</div>
@@ -196,7 +199,7 @@ const EmployeeDetail = () => {
                       {/* Projects Tab */}
                       {activeTab === 'projects' && (
                           <div className="tab-pane fade show active">
-                            <div className="d-flex justify-content-between align-items-center mb-3">
+                            <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                               <h5 className="mb-0">Assigned Projects</h5>
                               <span className="badge bg-primary">
                             {projects.length} {projects.length === 1 ? 'Project' : 'Projects'}
@@ -262,7 +265,7 @@ const EmployeeDetail = () => {
                           </div>
                       )}
                     </div>
-                  </div>
+                  </section>
                 </div>
               </div>
             </div>

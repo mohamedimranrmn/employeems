@@ -22,28 +22,39 @@ const EmployeeProjects = () => {
     };
 
     return (
-        <div className="container">
-            <h2 className="my-4 d-flex justify-content-center">Employee Projects</h2>
-            <table className="table table-striped">
-                <thead>
+        <div className="container my-4">
+            <h2 className="text-center mb-4">Employee Projects</h2>
+            {/* Bootstrap responsive wrapper */}
+            <div className="table-responsive">
+                <table className="table table-striped table-bordered">
+                    <thead className="table-dark">
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Employee Name</th>
                         <th>Project Name</th>
                         <th>Role</th>
                     </tr>
-                </thead>
-                <tbody>
-                    {assignments.map((assignment,index) => (
-                        <tr key={assignment.id}>
-                            <td>{index+1}</td>
-                            <td>{assignment.employee_name}</td>
-                            <td>{assignment.project_name}</td>
-                            <td>{assignment.role}</td>
+                    </thead>
+                    <tbody>
+                    {assignments.length === 0 ? (
+                        <tr>
+                            <td colSpan="4" className="text-center">
+                                No assignments found.
+                            </td>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    ) : (
+                        assignments.map((assignment, index) => (
+                            <tr key={assignment.id || index}>
+                                <td>{index + 1}</td>
+                                <td>{assignment.employee_name}</td>
+                                <td>{assignment.project_name}</td>
+                                <td>{assignment.role}</td>
+                            </tr>
+                        ))
+                    )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

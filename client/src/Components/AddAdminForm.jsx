@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api"; // assuming api.js is in src/
+import api from "../api";
 
 const AddAdminForm = () => {
   const [admin, setAdmin] = useState({ email: "", password: "" });
@@ -31,29 +31,30 @@ const AddAdminForm = () => {
   };
 
   return (
-      <div className="container mt-5">
+      <div className="container py-5">
         <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-header d-flex justify-content-center">
-                <h1 className="card-title">Add Admin</h1>
+          <div className="col-11 col-sm-10 col-md-8 col-lg-6">
+            <div className="card shadow-sm">
+              <div className="card-header bg-custom-dark text-dark text-center">
+                <h2 className="card-title mb-0">Add Admin</h2>
               </div>
-              <div className="card-body">
+              <div className="card-body p-4">
                 <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                  <div className="form-group mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
                     <input
-                        type="text"
+                        type="email"
                         className="form-control"
                         id="email"
                         name="email"
                         value={admin.email}
                         onChange={handleChange}
                         required
+                        placeholder="Enter admin email"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                  <div className="form-group mb-4">
+                    <label htmlFor="password" className="form-label">Password</label>
                     <input
                         type="password"
                         className="form-control"
@@ -62,9 +63,10 @@ const AddAdminForm = () => {
                         value={admin.password}
                         onChange={handleChange}
                         required
+                        placeholder="Enter a secure password"
                     />
                   </div>
-                  <button type="submit" className="btn btn-success btn-block mt-3">
+                  <button type="submit" className="btn btn-success w-100">
                     Add Admin
                   </button>
                 </form>

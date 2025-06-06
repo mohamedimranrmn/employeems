@@ -12,7 +12,6 @@ const EmployeeLogin = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -37,7 +36,8 @@ const EmployeeLogin = () => {
 
     return (
         <div className='d-flex justify-content-center align-items-center vh-100 loginPage'>
-            <div className='p-4 rounded w-25 border loginForm'>
+            {/* Replace fixed w-25 with responsive width classes */}
+            <div className='p-4 rounded border loginForm w-100' style={{ maxWidth: '400px' }}>
                 {error && (
                     <div className='alert alert-danger text-center mb-3'>
                         {error}
@@ -54,7 +54,7 @@ const EmployeeLogin = () => {
                             autoComplete='off'
                             placeholder='Enter Email'
                             value={values.email}
-                            onChange={(e) => setValues({...values, email: e.target.value})}
+                            onChange={(e) => setValues({ ...values, email: e.target.value })}
                             className='form-control rounded-0'
                             required
                         />
@@ -67,7 +67,7 @@ const EmployeeLogin = () => {
                             id="password"
                             placeholder='Enter Password'
                             value={values.password}
-                            onChange={(e) => setValues({...values, password: e.target.value})}
+                            onChange={(e) => setValues({ ...values, password: e.target.value })}
                             className='form-control rounded-0'
                             required
                         />
@@ -79,18 +79,11 @@ const EmployeeLogin = () => {
                     >
                         {loading ? 'Logging in...' : 'Log in'}
                     </button>
-                    <button
-                        className='btn btn-primary w-100 rounded-0 mb-3'>
+                    <button className='btn btn-primary w-100 rounded-0 mb-3'>
                         <Link to="/adminlogin" className="text-white text-decoration-none">
                             Go to Admin Login
                         </Link>
                     </button>
-                    {/*<div className="text-center mt-3">*/}
-                    {/*    <p className="mb-1">Admin login?</p>*/}
-                    {/*    <Link to="/adminlogin" className="btn btn-outline-light btn-sm">*/}
-                    {/*        Go to Admin Login*/}
-                    {/*    </Link>*/}
-                    {/*</div>*/}
                 </form>
             </div>
         </div>
